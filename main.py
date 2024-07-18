@@ -40,7 +40,7 @@ if __name__ == "__main__":
         display('-', f"No Directory as {Back.YELLOW}{arguments.path}{Back.RESET}")
         exit(0)
     if not arguments.write:
-        arguments.write = f"{date.today()} {strftime('%H_%M_%S', localtime())}.csv"
+        arguments.write = f"{date.today()} {strftime('%H_%M_%S', localtime())}.txt"
     paths = []
     for path, folders, files in os.walk(arguments.path):
         if "whatsapp" in path:
@@ -52,3 +52,5 @@ if __name__ == "__main__":
     groups.sort()
     display('+', f"Total Groups => {Back.MAGENTA}{len(groups)}{Back.RESET}")
     print('\n'.join([f"* {Fore.CYAN}{name}{Fore.RESET}" for name in groups]))
+    with open(arguments.write, 'w') as file:
+        file.write('\n'.join(groups))
