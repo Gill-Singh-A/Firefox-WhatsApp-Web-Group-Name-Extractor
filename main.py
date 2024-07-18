@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 
-import os
+import os, subprocess
 from pathlib import Path
 from datetime import date
 from optparse import OptionParser
@@ -26,6 +26,10 @@ def get_arguments(*args):
     for arg in args:
         parser.add_option(arg[0], arg[1], dest=arg[2], help=arg[3])
     return parser.parse_args()[0]
+
+def getGroups(file_path):
+    strings_output = subprocess.check_output(["strings", file_path]).decode().split('\n')
+    return list(set([strings_output[index-1][1:] for index in range(len(strings_output)) if strings_output[index].strip().endswith("Spam")]))
 
 if __name__ == "__main__":
     arguments = get_arguments(('-p', "--path", "path", f"Path to Firefox Cache Folder (Default={default_path})"),
