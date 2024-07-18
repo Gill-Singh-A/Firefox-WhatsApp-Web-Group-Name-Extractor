@@ -45,3 +45,10 @@ if __name__ == "__main__":
     for path, folders, files in os.walk(arguments.path):
         if "whatsapp" in path:
                 paths.extend([f"{path}/{file}" for file in files if "sqlite" in file])
+    groups = []
+    for path in paths:
+        groups.extend(getGroups(path))
+    groups = list(set(groups))
+    groups.sort()
+    display('+', f"Total Groups => {Back.MAGENTA}{len(groups)}{Back.RESET}")
+    print('\n'.join([f"* {Fore.CYAN}{name}{Fore.RESET}" for name in groups]))
